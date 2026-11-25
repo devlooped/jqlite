@@ -1,20 +1,33 @@
 [build-system]
-requires = ["setuptools>=68"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "jqlite"
+# The import name is `jqlite`; the name `jqlite` on PyPI belongs to another project.
+name = "devlooped-jqlite"
 version = "1.0.0"
 description = "jqlite, the portable profile of the jq language: the Python port of the JQLite reference engine"
 readme = "README.md"
 requires-python = ">=3.11"
-license = { text = "MIT" }
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Daniel Cazzulino" }]
+keywords = ["jq", "json", "query", "jqlite"]
 dependencies = []
 classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: Libraries",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
     "Typing :: Typed",
 ]
+
+[project.urls]
+Homepage = "https://github.com/devlooped/jqlite"
+Repository = "https://github.com/devlooped/jqlite"
+Issues = "https://github.com/devlooped/jqlite/issues"
 
 [tool.setuptools]
 packages = ["jqlite", "jqlite.values", "jqlite.syntax", "jqlite.binding", "jqlite.runtime", "jqlite.builtins"]
