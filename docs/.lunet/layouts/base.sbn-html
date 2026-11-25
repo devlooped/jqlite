@@ -53,6 +53,7 @@ layout: _default
                 aria-label="{{site.theme_toggle_label}}">
                 <i class="bi bi-circle-half" data-lunet-theme-toggle-icon aria-hidden="true"></i>
                 <span
+                  class="visually-hidden"
                   data-lunet-theme-toggle-label
                   data-theme-system-label="{{site.theme_mode_system_label}}"
                   data-theme-light-label="{{site.theme_mode_light_label}}"

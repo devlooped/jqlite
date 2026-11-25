@@ -15,5 +15,5 @@ implementations:
   - {path: rust/readme.md, title: "Rust", folder: true}
 
 home2:
-  - {url: "https://github.com/sponsors/devlooped", title: '<i class="bi bi-heart" aria-hidden="true"></i> Sponsor', link_class: btn btn-outline-secondary}
-  - {url: "https://github.com/devlooped/jqlite", title: '<i class="bi bi-github" aria-hidden="true"></i> GitHub', link_class: btn btn-info}
+  - {url: "https://github.com/sponsors/devlooped", title: '<i class="bi bi-heart" aria-hidden="true"></i><span class="visually-hidden">Sponsor</span>', link_class: btn btn-outline-secondary}
+  - {url: "https://github.com/devlooped/jqlite", title: '<i class="bi bi-github" aria-hidden="true"></i><span class="visually-hidden">GitHub</span>', link_class: btn btn-info}
