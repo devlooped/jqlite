@@ -75,7 +75,7 @@ Console.WriteLine(results[0].GetRawText()); // ["Ada"]
     <div class="tab-pane" id="sample-typescript" role="tabpanel" aria-labelledby="sample-tab-typescript" tabindex="0">
 
 ```typescript
-import { Jq } from "jqlite";
+import { Jq } from "@devlooped/jqlite";
 
 const people = [{ name: "Ada", active: true }, { name: "Lin", active: false }];
 

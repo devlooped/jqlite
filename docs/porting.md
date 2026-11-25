@@ -83,7 +83,7 @@ A port without modules drops `Modules.cs`, `ModuleNatives.cs`, the `Resolver.Bin
 
 | Folder | JS/TS | Python | Java | Go | Rust |
 | --- | --- | --- | --- | --- | --- |
-| package | `jqlite` (npm) | `jqlite` | `<group>.jqlite` | module `…/jqlite` | crate `jqlite` |
+| package | `@devlooped/jqlite` (npm) | `jqlite` (the distribution is `devlooped-jqlite`) | `<group>.jqlite` | module `…/jqlite` | crate `jqlite` |
 | Values | `src/values/` | `jqlite/values/` | `….jqlite.values` | `values` | `mod values` |
 | Syntax | `src/syntax/` | `jqlite/syntax/` | `….jqlite.syntax` | `syntax` | `mod syntax` |
 | Binding | `src/binding/` | `jqlite/binding/` | `….jqlite.binding` | `binding` | `mod binding` |
