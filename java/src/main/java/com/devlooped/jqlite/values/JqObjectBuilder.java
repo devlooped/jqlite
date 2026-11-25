@@ -53,9 +53,13 @@ public final class JqObjectBuilder {
         return i >= 0 ? values[i] : null;
     }
 
-    /** Sets {@code key}: an existing key keeps its position, a new key goes last. */
+    /**
+     * Sets {@code key}: an existing key keeps its position, a new key goes last. A lone surrogate
+     * of the key becomes U+FFFD, as in every string of a value.
+     */
     public void set(String key, JqValue value) {
         ensureNotBuilt();
+        key = CodePoints.sanitize(key);
         int i = indexOf(key);
         if (i >= 0) {
             values[i] = value;

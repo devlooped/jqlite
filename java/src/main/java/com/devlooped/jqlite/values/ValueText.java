@@ -539,12 +539,13 @@ public final class ValueText {
             }
             pos++;
             skipSpace();
-            frame.key = CodePoints.sanitize(key);
+            frame.key = key;
             return true;
         }
 
         // Reads the rest of a string after its opening quote into `string`. Escapes decode to
-        // UTF-16 units as they are; JqValue.fromString then turns lone surrogates into U+FFFD.
+        // UTF-16 units as they are; JqValue.fromString and JqObjectBuilder.set then turn lone
+        // surrogates into U+FFFD.
         private boolean readString() {
             StringBuilder builder = null;
             int run = pos;

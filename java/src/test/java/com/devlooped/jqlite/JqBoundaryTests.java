@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.devlooped.jqlite.values.JqObjectBuilder;
 import com.devlooped.jqlite.values.JqValue;
 import java.time.Clock;
 import java.time.Instant;
@@ -233,6 +234,11 @@ class JqBoundaryTests {
     @Test
     void hostStringsWithLoneSurrogatesAreSanitized() {
         assertEquals("\"a\uFFFDb\"", JqJson.toJson(Jq.evaluate(".", JqValue.fromString("a\uD800b")).get(0)));
+
+        // A key is a string too: the program finds it under the name it prints.
+        JqObjectBuilder builder = new JqObjectBuilder();
+        builder.set("k\uD800", JqValue.fromNumber(1));
+        assertEquals("[[\"k\uFFFD\"],true,1]", JqJson.toJson(Jq.evaluate("[keys, has(\"k\\ud800\"), .[\"k\\ud800\"]]", builder.toObject()).get(0)));
     }
 
     @Test
