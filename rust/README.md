@@ -126,9 +126,10 @@ Outside the core, the host boundary:
 | `Json/JsonElementAdapter.cs` | `json.rs`: the one place where host values and JSON text become `JqValue` and back |
 | `Host/ResolverSource.cs`, `Host/TimeProviderClock.cs` | `host/resolver_source.rs`, `host/clock.rs` |
 
-The prelude is `include_str!("../../../spec/prelude.jq")` (`binding/prelude.rs`): the file shared
-by every port, outside this folder. To publish the crate (`cargo package`), copy it into the crate
-and change that path first: a package cannot include a file above its root.
+The prelude is `include_str!("prelude.jq")` (`binding/prelude.rs`): a copy of the file `spec/prelude.jq`
+shared by every port, because a package cannot include a file above its root. After changing the
+spec's prelude, copy it again (`cp ../spec/prelude.jq src/binding/prelude.jq`); the test
+`the_embedded_prelude_is_spec_prelude_jq` fails when the two differ.
 
 ## Differences from the reference
 
