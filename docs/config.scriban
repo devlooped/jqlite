@@ -1,0 +1,94 @@
+# The jqlite website, built with Lunet (https://lunet.io). From this folder:
+#   pwsh build.ps1          builds the site into .lunet/build/www
+#   pwsh build.ps1 -Serve   serves it at http://localhost:4000 and rebuilds on changes
+# How the site is organized: the section "Website" of AGENTS.md.
+
+# The theme: layouts, styles, search, light and dark modes.
+extend "lunet-io/templates"
+
+# The documents of the repository that the site shows (the spec, the porting guide, the README of
+# each port): import.ps1 writes them into .lunet/extends/repo, which this lays under the site.
+extend "repo"
+
+# -----------------------------------------------------------------------------
+# The project
+# -----------------------------------------------------------------------------
+# devlooped.github.io is served from www.devlooped.com, and this is a project site: /jqlite.
+site_project_baseurl = "https://www.devlooped.com"
+site_project_basepath = "/jqlite"
+
+site_project_name = "jqlite"
+site_project_description = "A portable profile of the jq language: one specification, one conformance corpus, and implementations for .NET, TypeScript, Python, Java, Go and Rust."
+site_project_logo_path = "/img/logo.svg"
+site_project_favicon_path = "/img/logo.svg"
+site_project_package_id = "JQLite"
+site_project_github_user = "devlooped"
+site_project_github_repo = "jqlite"
+site_project_owner_name = "Daniel Cazzulino"
+site_project_owner_alias = "kzu"
+site_project_owner_url = "https://github.com/kzu"
+
+template_theme_override_styles = ["/css/jqlite.scss"]
+template_prism_components = template_prism_components | array.add "prism-jq.min.js"
+template_footer_ownership_html = "Copyright &copy; Daniel Cazzulino and Contributors"
+template_footer_content_license_html = "- <a href=\"https://github.com/devlooped/jqlite/blob/main/license.txt\">MIT</a> license, use under the <a href=\"https://github.com/devlooped/jqlite/blob/main/osmfeula.txt\">OSMF EULA</a>"
+
+site_project_init
+
+# The project has no social banner: the cards carry the title and the description only.
+with cards
+    twitter.card = "summary"
+    twitter.user = null
+    twitter.image = null
+    og.image = null
+end
+
+# The script of this site (.lunet/js/jqlite.js, beside the theme's: Lunet leaves a script of the
+# content folders out of the bundle), and Mermaid for the pages that have a diagram: the script
+# loads it from beside the bundle, so it is copied there and not made part of the bundle.
+with bundle
+    mermaid = resource "npm:mermaid" "11.12.1"
+    content mermaid "/dist/mermaid.min.js" "/js/"
+    js "/js/jqlite.js"
+end
+
+# -----------------------------------------------------------------------------
+# The implementations
+# -----------------------------------------------------------------------------
+# One section per implementation, in a folder named by `id`. `tag` is the mark shown beside the
+# name, `package` what a user installs or imports.
+jqlite_languages = [
+    { id: "dotnet", name: ".NET", tag: "C#", package: "NuGet package JQLite", note: "The reference implementation, with a generated API reference." },
+    { id: "typescript", name: "TypeScript", tag: "TS", package: "npm package jqlite", note: "ESM, Node 20 or later, no dependency." },
+    { id: "python", name: "Python", tag: "Py", package: "package jqlite", note: "Python 3.11 or later, standard library only." },
+    { id: "java", name: "Java", tag: "Jv", package: "com.devlooped:jqlite", note: "Java 21 or later, no dependency." },
+    { id: "go", name: "Go", tag: "Go", package: "module github.com/devlooped/jqlite/go", note: "Standard library only." },
+    { id: "rust", name: "Rust", tag: "Rs", package: "crate jqlite", note: "Edition 2024." }
+]
+
+# The pages every implementation section has under the same name: the language switcher keeps the
+# reader on the same topic, and goes to the overview of the section from any other page.
+jqlite_topics = ["evaluate", "values", "variables", "options", "modules", "errors", "jsonl", "api"]
+
+# -----------------------------------------------------------------------------
+# The .NET API reference, from the XML documentation of the project
+# -----------------------------------------------------------------------------
+with api.dotnet
+    title = "JQLite .NET API reference"
+    path = "/dotnet/api"
+    menu_name = "dotnet_api"
+    menu_title = "<i class='bi bi-braces' aria-hidden='true'></i> API reference"
+    config = "Release"
+    properties = { TargetFramework: "net8.0" }
+    projects = [
+        { name: "JQLite", path: "../dotnet/JQLite/JQLite.csproj" }
+    ]
+end
+
+# -----------------------------------------------------------------------------
+# Content
+# -----------------------------------------------------------------------------
+# The documents of this folder that import.ps1 turns into pages, and the scripts.
+excludes.add "/manual.md"
+excludes.add "/porting.md"
+excludes.add "/*.ps1"

@@ -1,0 +1,6 @@
+# porting.md, corpus.md and benchmarks.md are imported by ../import.ps1.
+project:
+  - {path: readme.md, title: "<i class='bi bi-diagram-3' aria-hidden='true'></i> The project"}
+  - {path: porting.md, title: "<i class='bi bi-arrow-left-right' aria-hidden='true'></i> Porting guide"}
+  - {path: corpus.md, title: "<i class='bi bi-check2-square' aria-hidden='true'></i> Conformance corpus"}
+  - {path: benchmarks.md, title: "<i class='bi bi-speedometer2' aria-hidden='true'></i> Benchmarks"}
