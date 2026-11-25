@@ -1,0 +1,13 @@
+# The same pages, under the same names, as every other implementation (jqlite_topics in
+# ../config.scriban). port.md is the README of the port, imported by ../import.ps1.
+python:
+  - {path: readme.md, title: "<i class='bi bi-rocket-takeoff' aria-hidden='true'></i> Overview"}
+  - {path: evaluate.md, title: "<i class='bi bi-play' aria-hidden='true'></i> Evaluating"}
+  - {path: values.md, title: "<i class='bi bi-box' aria-hidden='true'></i> Values"}
+  - {path: variables.md, title: "<i class='bi bi-currency-dollar' aria-hidden='true'></i> Variables"}
+  - {path: options.md, title: "<i class='bi bi-sliders' aria-hidden='true'></i> Options"}
+  - {path: modules.md, title: "<i class='bi bi-boxes' aria-hidden='true'></i> Modules"}
+  - {path: errors.md, title: "<i class='bi bi-exclamation-triangle' aria-hidden='true'></i> Errors"}
+  - {path: jsonl.md, title: "<i class='bi bi-list-ol' aria-hidden='true'></i> JSON Lines"}
+  - {path: api.md, title: "<i class='bi bi-braces' aria-hidden='true'></i> API reference"}
+  - {path: port.md, title: "<i class='bi bi-tools' aria-hidden='true'></i> Port notes"}

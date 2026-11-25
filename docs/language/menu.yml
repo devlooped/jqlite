@@ -1,0 +1,6 @@
+# manual.md and spec.md are imported by ../import.ps1.
+language:
+  - {path: readme.md, title: "<i class='bi bi-braces-asterisk' aria-hidden='true'></i> The language"}
+  - {path: tour.md, title: "<i class='bi bi-signpost-2' aria-hidden='true'></i> A tour"}
+  - {path: manual.md, title: "<i class='bi bi-book' aria-hidden='true'></i> jq 1.8 manual"}
+  - {path: spec.md, title: "<i class='bi bi-file-earmark-ruled' aria-hidden='true'></i> Specification"}

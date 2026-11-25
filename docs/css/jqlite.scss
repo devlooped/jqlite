@@ -1,0 +1,271 @@
+// The styles of this site, loaded after the theme's (template_theme_override_styles in
+// config.scriban). Colours come from the theme's variables, so both modes follow.
+
+// ---------------------------------------------------------------------------
+// The language switcher (.lunet/includes/jqlite/languages.sbn-html)
+// ---------------------------------------------------------------------------
+
+.jqlite-language-tag {
+    display: inline-block;
+    min-width: 2.2rem;
+    margin-right: 0.6rem;
+    padding: 0.05rem 0.3rem;
+    border: 1px solid var(--lunet-color-border-strong);
+    border-radius: 0.3rem;
+    color: var(--lunet-color-cyan);
+    font-family: var(--bs-font-monospace);
+    font-size: 0.72rem;
+    font-weight: 600;
+    line-height: 1.4;
+    text-align: center;
+}
+
+.jqlite-language-tabs {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    padding: 0.4rem 0.75rem;
+    overflow-x: auto;
+    border: 1px solid var(--lunet-color-border);
+    border-radius: 0.6rem;
+    background-color: var(--lunet-color-surface-1);
+
+    .jqlite-language-tabs-label {
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        white-space: nowrap;
+        opacity: 0.7;
+    }
+
+    .nav {
+        flex-wrap: nowrap;
+        gap: 0.25rem;
+    }
+
+    .nav-link {
+        padding: 0.2rem 0.75rem;
+        border-radius: 2rem;
+        color: var(--bs-body-color);
+        text-decoration: none;
+        white-space: nowrap;
+    }
+
+    .nav-link:hover,
+    .nav-link:focus-visible {
+        background-color: var(--lunet-color-surface-2);
+    }
+
+    .nav-link.active {
+        background-color: var(--lunet-color-blue);
+        color: var(--lunet-color-background);
+        font-weight: 600;
+    }
+}
+
+// ---------------------------------------------------------------------------
+// The home page (readme.md)
+// ---------------------------------------------------------------------------
+
+.jqlite-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.5rem;
+    align-items: center;
+    padding: 3rem 0 2rem;
+
+    @media (min-width: 992px) {
+        grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    }
+
+    h1 {
+        margin: 0 0 1rem;
+        font-size: clamp(2rem, 4.2vw, 3.1rem);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1.1;
+    }
+
+    .lead {
+        max-width: 38rem;
+    }
+}
+
+.jqlite-eyebrow {
+    margin-bottom: 0.75rem;
+    color: var(--lunet-color-cyan);
+    font-family: var(--bs-font-monospace);
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+}
+
+// A program, its input and its outputs, as three labelled rows.
+.jqlite-run {
+    overflow: hidden;
+    border: 1px solid var(--lunet-color-border-strong);
+    border-radius: 0.75rem;
+    background-color: var(--lunet-code-bg);
+    font-family: var(--bs-font-monospace);
+    font-size: 0.86rem;
+
+    > div {
+        display: grid;
+        grid-template-columns: 5.5rem minmax(0, 1fr);
+        border-top: 1px solid var(--lunet-color-border);
+    }
+
+    > div:first-child {
+        border-top: 0;
+    }
+
+    .jqlite-run-label {
+        padding: 0.8rem 0.9rem;
+        border-right: 1px solid var(--lunet-color-border);
+        background-color: var(--lunet-color-surface-1);
+        font-size: 0.7rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        opacity: 0.8;
+    }
+
+    pre {
+        margin: 0;
+        padding: 0.8rem 0.9rem;
+        overflow-x: auto;
+        background: none;
+        color: var(--lunet-prism-text);
+        white-space: pre;
+    }
+
+    .jqlite-run-program pre {
+        color: var(--lunet-color-bright-cyan);
+    }
+}
+
+.jqlite-section-title {
+    margin: 3rem 0 0.35rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.jqlite-section-lead {
+    max-width: 46rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.85;
+}
+
+.jqlite-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+    gap: 1rem;
+}
+
+.jqlite-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 1.1rem 1.2rem;
+    border: 1px solid var(--lunet-color-border);
+    border-radius: 0.75rem;
+    background-color: var(--lunet-color-surface-1);
+    color: var(--bs-body-color);
+    text-decoration: none;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+
+    &:hover,
+    &:focus-visible {
+        border-color: var(--lunet-color-blue);
+        color: var(--bs-body-color);
+        transform: translateY(-2px);
+    }
+
+    .jqlite-card-title {
+        display: flex;
+        align-items: center;
+        font-size: 1.15rem;
+        font-weight: 600;
+    }
+
+    .jqlite-card-package {
+        color: var(--lunet-color-cyan);
+        font-family: var(--bs-font-monospace);
+        font-size: 0.8rem;
+        overflow-wrap: anywhere;
+    }
+
+    .jqlite-card-note {
+        font-size: 0.9rem;
+        opacity: 0.85;
+    }
+
+    .bi {
+        margin-right: 0.6rem;
+        color: var(--lunet-color-cyan);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .jqlite-card {
+        transition: none;
+
+        &:hover,
+        &:focus-visible {
+            transform: none;
+        }
+    }
+}
+
+// The same call in every language (Bootstrap tabs).
+.jqlite-samples {
+    .nav-tabs {
+        border-bottom-color: var(--lunet-color-border);
+    }
+
+    .nav-link {
+        color: var(--bs-body-color);
+        text-decoration: none;
+    }
+
+    .nav-link.active {
+        border-color: var(--lunet-color-border) var(--lunet-color-border) var(--lunet-code-bg);
+        background-color: var(--lunet-code-bg);
+        color: var(--lunet-color-bright-cyan);
+    }
+
+    pre[class*="language-"] {
+        margin-top: 0;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Pages
+// ---------------------------------------------------------------------------
+
+// The spec and the porting guide have wide tables: they scroll inside the page instead of widening it.
+.js-toc-content table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.js-toc-content .mermaid {
+    margin: 1.5rem 0;
+    text-align: center;
+}
+
+// The .NET API reference: the summaries of this API are sentences, not labels, so in the lists of
+// members they read from the left, beside a column of names.
+@media (min-width: 576px) {
+    .api-dotnet-members .api-dotnet-member-title {
+        flex: 0 0 15rem;
+        max-width: none;
+    }
+
+    .api-dotnet-members .api-dotnet-member-summary {
+        max-width: none;
+        text-align: left;
+    }
+}

@@ -93,6 +93,16 @@ Values, the bound program and the prelude are immutable and shared between threa
 
 `bench/` is the cross-language benchmark (`bench/README.md`): `pwsh bench/run.ps1` builds every implementation, checks that their outputs equal `bench/cases/*.expected` and writes the times relative to .NET. The .NET runner is `dotnet/Benchmarks/CrossBench.cs` (`Benchmarks cross …`).
 
+## Website
+
+`docs/` is the website, a [Lunet](https://lunet.io) site (`config.scriban`) published to GitHub Pages by `.github/workflows/site.yml`. `pwsh docs/build.ps1` builds it into `docs/.lunet/build/www` and `pwsh docs/build.ps1 -Serve` serves it (`dotnet tool install -g lunet`).
+
+- General content is apart from the implementations: `docs/language/` (the language, the same for every implementation) and `docs/project/` (porting, the corpus, the benchmark).
+- Each implementation has a section, `docs/dotnet/`, `docs/typescript/`, `docs/python/`, `docs/java/`, `docs/go/` and `docs/rust/`, with the same pages under the same file names (`jqlite_topics` in `config.scriban`): the language switcher takes a reader to the same topic in another language. A topic added to one section is added to all six.
+- The .NET API reference (`/dotnet/api/`) is generated from the XML documentation of `dotnet/JQLite`; the other sections have a hand-written `api.md`.
+- The site keeps no copy of a document of the repository: `docs/import.ps1` turns `spec/jqlite.md`, `docs/manual.md`, `docs/porting.md`, `spec/tests/README.md`, `bench/README.md` and the `README.md` of each port into pages, with their links rewritten, in the git-ignored Lunet extension `docs/.lunet/extends/repo`. Edit the document, not the page.
+- A page is a Scriban template: two opening or two closing braces in a row must not appear in its text or its code.
+
 ## Where a change goes
 
 | Change | Files |
@@ -104,6 +114,7 @@ Values, the bound program and the prelude are immutable and shared between threa
 | a syntax or binding error | `SyntaxMessages` (`Core/Syntax/SyntaxError.cs`) or `BindingMessages` (`Core/Binding/Resolver.cs`); a fixed text also goes in §10.2 |
 | a limit | §11 and the constant in the layer that enforces it |
 | a host-specific mechanism | only the files named in Portability rules; say in its header what a port does instead |
+| the host API of an implementation | its code, its `README.md` if it describes it, and its guide in `docs/<language>/` (for a port, `api.md` too) |
 
 ## Host boundary
 

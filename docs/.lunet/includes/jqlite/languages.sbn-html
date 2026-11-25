@@ -1,0 +1,47 @@
+{{~
+  # The language switcher. $1 is its form: "dropdown" (the navigation bar) or "tabs" (the bar above
+  # the pages of an implementation). A link keeps the topic of the current page when every
+  # implementation has it (site.jqlite_topics), and goes to the overview of the section otherwise.
+  $kind = $1
+  $parts = page.url_without_basepath | string.downcase | string.split '/'
+  $current = null
+  for language in site.jqlite_languages
+    if language.id == $parts[0]
+      $current = language
+    end
+  end
+  $topic = ""
+  if $current != null && $parts.size > 1 && (site.jqlite_topics | array.contains $parts[1])
+    $topic = $parts[1] + "/"
+  end
+~}}
+{{~ if $kind == "dropdown" ~}}
+<ol class="navbar-nav jqlite-languages">
+  <li class="nav-item dropdown{{ $current != null ? " active" : "" }}">
+    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-code-slash" aria-hidden="true"></i>{{ $current != null ? $current.name : "Implementations" }}
+    </a>
+    <ul class="dropdown-menu">
+      <li><h6 class="dropdown-header">{{ $current != null ? "This page in another language" : "Pick your language" }}</h6></li>
+      {{~ for language in site.jqlite_languages ~}}
+      <li>
+        <a class="dropdown-item{{ language == $current ? " active" : "" }}" href="{{ site.basepath }}/{{ language.id }}/{{ $topic }}"{{ language == $current ? ' aria-current="true"' : "" }}>
+          <span class="jqlite-language-tag" aria-hidden="true">{{ language.tag }}</span>{{ language.name }}
+        </a>
+      </li>
+      {{~ end ~}}
+    </ul>
+  </li>
+</ol>
+{{~ else if $current != null ~}}
+<nav class="jqlite-language-tabs" aria-label="Implementation">
+  <span class="jqlite-language-tabs-label">Implementation</span>
+  <ul class="nav nav-pills">
+    {{~ for language in site.jqlite_languages ~}}
+    <li class="nav-item">
+      <a class="nav-link{{ language == $current ? " active" : "" }}" href="{{ site.basepath }}/{{ language.id }}/{{ $topic }}"{{ language == $current ? ' aria-current="page"' : "" }}>{{ language.name }}</a>
+    </li>
+    {{~ end ~}}
+  </ul>
+</nav>
+{{~ end ~}}

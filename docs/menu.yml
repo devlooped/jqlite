@@ -1,0 +1,19 @@
+# The navigation bar: `home` is its left part and `home2` its right part. Between them the bar has
+# the language switcher (.lunet/includes/jqlite/languages.sbn-html), which shows the sections of
+# `implementations`; that menu gives their pages a breadcrumb.
+home:
+  - {path: readme.md, title: "<i class='bi bi-house-door' aria-hidden='true'></i> Home", self: true}
+  - {path: language/readme.md, title: "<i class='bi bi-braces-asterisk' aria-hidden='true'></i> Language", folder: true}
+  - {path: project/readme.md, title: "<i class='bi bi-diagram-3' aria-hidden='true'></i> Project", folder: true}
+
+implementations:
+  - {path: dotnet/readme.md, title: ".NET", folder: true}
+  - {path: typescript/readme.md, title: "TypeScript", folder: true}
+  - {path: python/readme.md, title: "Python", folder: true}
+  - {path: java/readme.md, title: "Java", folder: true}
+  - {path: go/readme.md, title: "Go", folder: true}
+  - {path: rust/readme.md, title: "Rust", folder: true}
+
+home2:
+  - {url: "https://github.com/sponsors/devlooped", title: '<i class="bi bi-heart" aria-hidden="true"></i> Sponsor', link_class: btn btn-outline-secondary}
+  - {url: "https://github.com/devlooped/jqlite", title: '<i class="bi bi-github" aria-hidden="true"></i> GitHub', link_class: btn btn-info}

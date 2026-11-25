@@ -1,0 +1,3 @@
+# What Lunet generates and downloads, and what import.ps1 imports.
+/.lunet/build/
+/.lunet/extends/repo/

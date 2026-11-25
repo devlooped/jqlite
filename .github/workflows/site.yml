@@ -1,0 +1,42 @@
+# Builds the website (docs/, a Lunet site) and deploys it to GitHub Pages.
+# Requires: Settings > Pages > Build and deployment > Source set to "GitHub Actions".
+
+name: site
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+    # The site, and what it imports (docs/import.ps1) or documents (the .NET API reference).
+    paths:
+      - docs/**
+      - spec/jqlite.md
+      - spec/tests/README.md
+      - bench/README.md
+      - '*/README.md'
+      - assets/img/logo.svg
+      - dotnet/JQLite/**
+      - .github/workflows/site.yml
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deployment at a time; a newer one waits for the running one to end.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  site:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.lunet.outputs.page_url }}
+    steps:
+      - name: 🚀 site
+        id: lunet
+        uses: lunet-io/actions/lunet-build@v1
+        with:
+          site_path: docs
+          build_command: pwsh ./build.ps1
