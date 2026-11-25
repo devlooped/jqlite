@@ -59,8 +59,8 @@ end
 # name, `package` what a user installs or imports.
 jqlite_languages = [
     { id: "dotnet", name: ".NET", tag: "C#", package: "NuGet package JQLite", note: "The reference implementation, with a generated API reference." },
-    { id: "typescript", name: "TypeScript", tag: "TS", package: "npm package jqlite", note: "ESM, Node 20 or later, no dependency." },
-    { id: "python", name: "Python", tag: "Py", package: "package jqlite", note: "Python 3.11 or later, standard library only." },
+    { id: "typescript", name: "TypeScript", tag: "TS", package: "npm package @devlooped/jqlite", note: "ESM, Node 20 or later, no dependency." },
+    { id: "python", name: "Python", tag: "Py", package: "distribution devlooped-jqlite, imported as jqlite", note: "Python 3.11 or later, standard library only." },
     { id: "java", name: "Java", tag: "Jv", package: "com.devlooped:jqlite", note: "Java 21 or later, no dependency." },
     { id: "go", name: "Go", tag: "Go", package: "module github.com/devlooped/jqlite/go", note: "Standard library only." },
     { id: "rust", name: "Rust", tag: "Rs", package: "crate jqlite", note: "Edition 2024." }
