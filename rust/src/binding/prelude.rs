@@ -2,8 +2,10 @@
 //! (immutable, so safe to use from any thread). A program's function table starts with
 //! `Prelude::functions`, so prelude calls keep their indices in every program.
 //!
-//! Host-specific: the prelude text is embedded in the crate with `include_str!`, from the shared
-//! file `spec/prelude.jq` of the repository (the reference reads an assembly resource).
+//! Host-specific: the prelude text is embedded in the crate with `include_str!`, from `prelude.jq`
+//! next to this file, a copy of the shared `spec/prelude.jq` (a package cannot include a file above
+//! its root; `the_embedded_prelude_is_spec_prelude_jq` fails when the copy differs). The reference
+//! reads an assembly resource.
 
 use std::collections::HashMap;
 use std::sync::{Arc, LazyLock};
@@ -14,7 +16,7 @@ use super::bound::Function;
 use super::resolver::Resolver;
 
 /// The text of `spec/prelude.jq`, unchanged.
-pub const SOURCE: &str = include_str!("../../../spec/prelude.jq");
+pub const SOURCE: &str = include_str!("prelude.jq");
 
 pub struct Prelude {
     /// Every function of the prelude, nested ones included, in the order of definition.

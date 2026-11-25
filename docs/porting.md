@@ -376,7 +376,7 @@ Embed `spec/prelude.jq` unchanged, parse and bind it once against the natives, s
 | Python | package data read with `importlib.resources` |
 | Java | a resource read with `getResourceAsStream` |
 | Go | `//go:embed prelude.jq` (copy the file next to the package at build time) |
-| Rust | `include_str!("../../spec/prelude.jq")` |
+| Rust | `include_str!("prelude.jq")` (a copy of the file next to the module: a package cannot include a file above its root) |
 
 ### 3.8 Objects, threads, host interface
 

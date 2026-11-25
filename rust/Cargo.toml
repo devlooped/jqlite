@@ -5,6 +5,13 @@ edition = "2024"
 rust-version = "1.85"
 description = "jqlite: a portable profile of the jq language (Rust port of the JQLite reference)"
 license = "MIT"
+readme = "README.md"
+repository = "https://github.com/devlooped/jqlite"
+homepage = "https://github.com/devlooped/jqlite"
+keywords = ["jq", "json", "query", "interpreter"]
+categories = ["parser-implementations", "command-line-utilities"]
+# The tests read the conformance corpus of the repository, and the benchmark runner is a package of its own.
+exclude = ["bench/", "bench.json", "tests/", "rustfmt.toml"]
 
 [lib]
 name = "jqlite"
