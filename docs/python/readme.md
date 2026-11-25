@@ -14,7 +14,7 @@ title: "jqlite for Python"
 
 ## Getting it
 
-The manifest, [`python/pyproject.toml`](https://github.com/devlooped/jqlite/blob/main/python/pyproject.toml), declares the package `jqlite`, version `1.0.0`. The repository does not publish it to PyPI. Install it from a clone of the repository:
+The manifest, [`python/pyproject.toml`](https://github.com/devlooped/jqlite/blob/main/python/pyproject.toml), declares the distribution `devlooped-jqlite` (the name `jqlite` on PyPI belongs to another project), version `1.0.0`; the import name is `jqlite`. The repository does not publish it to PyPI. Install it from a clone of the repository:
 
 ```shell-session
 $ git clone https://github.com/devlooped/jqlite.git

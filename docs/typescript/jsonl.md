@@ -11,7 +11,7 @@ value with `Jq.evaluateAsync`.
 ## Jq.evaluateAsync
 
 ```typescript
-import { Jq } from "jqlite";
+import { Jq } from "@devlooped/jqlite";
 
 for await (const result of Jq.evaluateAsync(".a * 10", [{ a: 1 }, { a: 2 }, { a: 3 }])) {
   console.log(result);
@@ -40,7 +40,7 @@ value are all computed before the first of them is yielded. Each value is evalua
 its own value.
 
 ```typescript
-import { Jq } from "jqlite";
+import { Jq } from "@devlooped/jqlite";
 
 const results = [];
 for await (const result of Jq.evaluateAsync("if . == 2 then halt else ., . * 10 end", [1, 2, 3])) {
@@ -71,7 +71,7 @@ Given `events.jsonl`:
 ```typescript
 import { createReadStream } from "node:fs";
 import { createInterface } from "node:readline";
-import { Jq, type JsonInput } from "jqlite";
+import { Jq, type JsonInput } from "@devlooped/jqlite";
 
 async function* values(path: string): AsyncGenerator<JsonInput> {
   const lines = createInterface({ input: createReadStream(path, "utf8"), crlfDelay: Infinity });
@@ -107,7 +107,7 @@ JSON text and returns the canonical text of each result, without going through p
 ```typescript
 import { createReadStream } from "node:fs";
 import { createInterface } from "node:readline";
-import { Jq } from "jqlite";
+import { Jq } from "@devlooped/jqlite";
 
 const users = Jq.parse("select(.action == \"upload\") | .user");
 const lines = createInterface({ input: createReadStream("events.jsonl", "utf8"), crlfDelay: Infinity });

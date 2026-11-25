@@ -10,7 +10,7 @@ A host variable is a value the host gives an evaluation under a name, which the 
 ## Passing variables
 
 ```typescript
-import { Jq } from "jqlite";
+import { Jq } from "@devlooped/jqlite";
 
 const greet = Jq.parse('"\\($greeting), \\(.name)!"');
 
@@ -49,7 +49,7 @@ host did not give it, that is the run-time error `$name is not defined`. The pro
 the evaluation that reaches the variable fails, and `try` catches the error:
 
 ```typescript
-import { Jq, JqError } from "jqlite";
+import { Jq, JqError } from "@devlooped/jqlite";
 
 const expression = Jq.parse("$x + 1");
 console.log(expression.evaluate(null, { x: 1 }));
@@ -81,7 +81,7 @@ A binding in the program hides a host variable of the same name, as an inner bin
 outer one. Both `as $name` and a `$name` parameter do:
 
 ```typescript
-import { Jq } from "jqlite";
+import { Jq } from "@devlooped/jqlite";
 
 console.log(Jq.evaluate("1 as $x | $x", null, { x: 99 }));
 console.log(Jq.evaluate("def f($x): $x; f(5)", null, { x: 99 }));
@@ -102,7 +102,7 @@ console.log(Jq.evaluate("[$x, (2 as $x | $x), $x]", null, { x: 1 }));
 | `$__loc__` | `{"file": F, "line": L}`: the line of the `$`, and `"<top-level>"` in the main program or the module's identity in a module. It is not a variable: it cannot be bound or passed |
 
 ```typescript
-import { Jq } from "jqlite";
+import { Jq } from "@devlooped/jqlite";
 
 console.log(Jq.evaluate("1 |\n$__loc__", null));
 console.log(Jq.parse("$ENV.HOME, env.HOME", { environment: { HOME: "/home/ada" } }).evaluate(null));

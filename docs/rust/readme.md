@@ -15,14 +15,14 @@ You parse a jq program once into a `JqExpression`, then evaluate it on `JqValue`
 
 ## Getting it
 
-The crate is not published on crates.io. Take it from the Git repository:
+The crate is [`jqlite` on crates.io](https://crates.io/crates/jqlite):
 
 ```toml
 [dependencies]
-jqlite = { git = "https://github.com/devlooped/jqlite" }
+jqlite = "1"
 ```
 
-Or, with a clone of the repository, as a path dependency on its `rust` folder:
+To follow the repository instead, use a path dependency on the `rust` folder of a clone:
 
 ```toml
 [dependencies]

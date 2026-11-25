@@ -17,7 +17,7 @@ The API throws three error classes of its own, all subclasses of `JqError` (itse
 ## Syntax and binding errors
 
 ```typescript
-import { Jq, JqParseError } from "jqlite";
+import { Jq, JqParseError } from "@devlooped/jqlite";
 
 try {
   Jq.parse(".a |\n  foo");
@@ -43,7 +43,7 @@ import, a module that cannot be found or read, a circular import, and a program 
 ## Run-time errors
 
 ```typescript
-import { Jq, JqError } from "jqlite";
+import { Jq, JqError } from "@devlooped/jqlite";
 
 for (const program of ['error("boom")', "error({code: 42})", '. + 1']) {
   try {
@@ -75,7 +75,7 @@ and `$name is not defined` (see [Variables](variables.md)) are run-time errors l
 `B?` is `try B`. Results of `B` before the error are kept.
 
 ```typescript
-import { Jq } from "jqlite";
+import { Jq } from "@devlooped/jqlite";
 
 console.log(JSON.stringify(Jq.evaluate("[try (1, error(\"x\"), 3) catch .]", null)));
 console.log(JSON.stringify(Jq.evaluate("[.[] | .a?]", [{ a: 1 }, true, { a: 2 }])));
@@ -97,7 +97,7 @@ Every run-time error is catchable, including `Maximum call depth exceeded`. `bre
 The message follows the same rule as other errors.
 
 ```typescript
-import { Jq, JqHaltError } from "jqlite";
+import { Jq, JqHaltError } from "@devlooped/jqlite";
 
 console.log(Jq.evaluate("1, halt, 2", null));
 try {

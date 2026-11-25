@@ -17,12 +17,12 @@ jqlite has no search path of its own: the host finds modules through a resolver,
 
 ## The file resolver
 
-`JqFileResolver`, from the `jqlite/node` entry, reads modules from the file system:
+`JqFileResolver`, from the `@devlooped/jqlite/node` entry, reads modules from the file system:
 
 ```typescript
 import { mkdirSync, writeFileSync } from "node:fs";
-import { Jq } from "jqlite";
-import { JqFileResolver } from "jqlite/node";
+import { Jq } from "@devlooped/jqlite";
+import { JqFileResolver } from "@devlooped/jqlite/node";
 
 mkdirSync("modules/lib", { recursive: true });
 writeFileSync("modules/lib/text.jq", 'def shout: ascii_upcase + "!";');
@@ -53,7 +53,7 @@ resources, as the .NET reference has.
 A resolver implements `JqResolver`, two methods:
 
 ```typescript
-import { Jq, type JqModuleKind, type JqResolver } from "jqlite";
+import { Jq, type JqModuleKind, type JqResolver } from "@devlooped/jqlite";
 
 const sources = new Map([
   ["mem:greet.jq", 'def greet: "hello " + .;'],
@@ -120,7 +120,7 @@ directive: ` at line L, column C` in the program, ` at <identity>, line L, colum
 calls the resolver during the evaluation, so its failures are run-time errors that `try` catches:
 
 ```typescript
-import { Jq, type JqResolver } from "jqlite";
+import { Jq, type JqResolver } from "@devlooped/jqlite";
 
 const resolver: JqResolver = {
   getCanonicalPath: (path) => (path === "meta" ? path : null),

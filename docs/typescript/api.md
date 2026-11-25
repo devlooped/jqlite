@@ -5,13 +5,13 @@ title: "API reference"
 # API reference
 
 The package `jqlite` has two entry points. `jqlite` exports everything below except
-`JqFileResolver`, which `jqlite/node` exports. Names marked *type* are TypeScript types only, with
+`JqFileResolver`, which `@devlooped/jqlite/node` exports. Names marked *type* are TypeScript types only, with
 no run-time value.
 
 ```typescript
-import { Jq, JqExpression, JqError, JqHaltError, JqParseError } from "jqlite";
-import type { JqClock, JqModuleKind, JqOptions, JqResolver, JqVariables, JsonInput, JsonValue } from "jqlite";
-import { JqFileResolver } from "jqlite/node";
+import { Jq, JqExpression, JqError, JqHaltError, JqParseError } from "@devlooped/jqlite";
+import type { JqClock, JqModuleKind, JqOptions, JqResolver, JqVariables, JsonInput, JsonValue } from "@devlooped/jqlite";
+import { JqFileResolver } from "@devlooped/jqlite/node";
 ```
 
 ## Jq
@@ -62,7 +62,7 @@ All three throw `JqError` for an uncaught error and `JqHaltError` for `halt_erro
 | `JqResolver` (*type*) | Finds and reads modules. See [Modules](modules.md). |
 | `JqResolver.getCanonicalPath(path: string, kind: JqModuleKind, metadata: JsonValue \| undefined, fromPath: string \| null): string \| null` | The identity of the module `path` imported from `fromPath` (`null`: the program); `null` when there is none. |
 | `JqResolver.open(canonicalPath: string): string` | The text of a module. |
-| `class JqFileResolver implements JqResolver` | From `jqlite/node`: modules in files, `.jq` or `.json` added to a path without an extension. |
+| `class JqFileResolver implements JqResolver` | From `@devlooped/jqlite/node`: modules in files, `.jq` or `.json` added to a path without an extension. |
 | `new JqFileResolver(baseDirectory: string)` | `baseDirectory` is what the program's own paths are relative to. |
 | `JqFileResolver.baseDirectory: string` | The base directory, made absolute. Read-only. |
 | `JqFileResolver.getCanonicalPath(path: string, kind: JqModuleKind, metadata: JsonValue \| undefined, fromPath: string \| null): string \| null` | The full path of an existing file, relative to the importing module's directory, or `null`. |
