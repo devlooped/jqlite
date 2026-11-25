@@ -28,15 +28,24 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  site:
+  build:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.lunet.outputs.page_url }}
     steps:
-      - name: 🚀 site
-        id: lunet
+      - name: 🛠️ build
         uses: lunet-io/actions/lunet-build@v1
         with:
           site_path: docs
           build_command: pwsh ./build.ps1
+          # Deployed by the next job: in the same job, deploy-pages may not yet see the artifact just uploaded.
+          deploy_pages: false
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: 🚀 deploy
+        id: deploy
+        uses: actions/deploy-pages@v4
