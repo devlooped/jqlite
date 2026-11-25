@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 import com.devlooped.jqlite.values.CodePoints;
+import com.devlooped.jqlite.values.JqObject;
+import com.devlooped.jqlite.values.JqObjectBuilder;
 import com.devlooped.jqlite.values.JqValue;
 import com.devlooped.jqlite.values.ValueOps;
 import org.junit.jupiter.api.Test;
@@ -129,8 +131,45 @@ class CodePointTests {
     }
 
     @Test
+    void loneSurrogatesInKeysBecomeReplacementCharacters() {
+        char high = (char) 0xD83D;
+        char low = (char) 0xDE00;
+        char replacement = (char) 0xFFFD;
+        JqValue one = JqValue.fromNumber(1);
+        JqValue two = JqValue.fromNumber(2);
+
+        // The second key is the first one again, once replaced: it keeps the position.
+        JqObjectBuilder builder = new JqObjectBuilder();
+        builder.set("k" + high, one);
+        builder.set("" + high + low + high, one);
+        builder.set("k" + replacement, two);
+        assertSame(two, builder.get("k" + replacement));
+        JqObject built = builder.toObject();
+        assertEquals(2, built.count());
+        assertEquals("k" + replacement, built.keyAt(0));
+        assertEquals("" + high + low + replacement, built.keyAt(1));
+
+        JqObject set = JqObject.EMPTY.set("" + low + high, one).set("" + replacement + replacement, two);
+        assertEquals(1, set.count());
+        assertEquals("" + replacement + replacement, set.keyAt(0));
+        assertSame(two, set.valueAt(0));
+
+        // Past the linear limit, where the index holds the keys.
+        JqObjectBuilder large = new JqObjectBuilder();
+        for (int i = 0; i < 12; i++) {
+            large.set("k" + i + low, one);
+        }
+        large.set("k3" + low, two);
+        JqObject indexed = large.toObject();
+        assertEquals(12, indexed.count());
+        assertSame(two, indexed.get("k3" + replacement));
+        assertEquals(13, indexed.set("k" + high, one).set("k" + replacement, two).count());
+    }
+
+    @Test
     void wellFormedStringsAreNotCopied() {
         String text = "aé😀b";
         assertSame(text, JqValue.fromString(text).asString());
+        assertSame(text, JqObject.EMPTY.set(text, JqValue.NULL).keyAt(0));
     }
 }

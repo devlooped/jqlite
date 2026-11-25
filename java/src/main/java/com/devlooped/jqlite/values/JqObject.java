@@ -126,8 +126,12 @@ public final class JqObject implements JqValue {
         }
     }
 
-    /** A copy with {@code key} set: an existing key keeps its position, a new key goes last. */
+    /**
+     * A copy with {@code key} set: an existing key keeps its position, a new key goes last. A lone
+     * surrogate of the key becomes U+FFFD, as in every string of a value.
+     */
     public JqObject set(String key, JqValue value) {
+        key = CodePoints.sanitize(key);
         int index = indexOf(key);
         if (index < 0) {
             return add(key, value);

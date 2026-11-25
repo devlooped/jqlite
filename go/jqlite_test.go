@@ -283,6 +283,14 @@ func TestValuesCrossTheBoundary(t *testing.T) {
 	}
 	// Ill-formed UTF-8 from Go becomes U+FFFD, one per maximal subpart.
 	same(t, []string{"[97,65533,65533,98]"}, texts(must(jqlite.Evaluate("explode", jqlite.String("a\xC0\x80b"), nil))))
+	// A key is a string too: the two keys below are one, under the name the program looks up.
+	object := jqlite.NewObject(jqlite.Member{Key: "k\xC0", Value: jqlite.Number(1)}, jqlite.Member{Key: "k\uFFFD", Value: jqlite.Number(2)})
+	same(t, []string{"[[\"k\uFFFD\"],true,2]"}, texts(must(jqlite.Evaluate(`[keys, has("k\ufffd"), .["k\ufffd"]]`, object, nil))))
+	mapped, err := jqlite.FromAny(map[string]any{"k\xC0": 1})
+	if err != nil {
+		t.Fatal(err)
+	}
+	same(t, []string{"{\"k\uFFFD\":1}"}, []string{jqlite.ToJSON(mapped)})
 }
 
 func must(results []jqlite.Value, err error) []jqlite.Value {

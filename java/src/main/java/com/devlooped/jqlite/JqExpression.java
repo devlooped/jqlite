@@ -6,7 +6,6 @@ import com.devlooped.jqlite.runtime.Evaluation.IClock;
 import com.devlooped.jqlite.runtime.Evaluation.Outcome;
 import com.devlooped.jqlite.runtime.Evaluation.OutcomeKind;
 import com.devlooped.jqlite.runtime.Interpreter;
-import com.devlooped.jqlite.values.CodePoints;
 import com.devlooped.jqlite.values.JqKind;
 import com.devlooped.jqlite.values.JqObjectBuilder;
 import com.devlooped.jqlite.values.JqValue;
@@ -152,7 +151,7 @@ public final class JqExpression {
     private static JqValue toObject(Map<String, String> variables) {
         JqObjectBuilder builder = new JqObjectBuilder(variables.size() + 1);
         for (Map.Entry<String, String> entry : variables.entrySet()) {
-            builder.set(CodePoints.sanitize(entry.getKey()), JqValue.fromString(entry.getValue() == null ? "" : entry.getValue()));
+            builder.set(entry.getKey(), JqValue.fromString(entry.getValue() == null ? "" : entry.getValue()));
         }
         return builder.toObject();
     }
