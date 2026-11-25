@@ -6,7 +6,7 @@ The TypeScript port of jqlite, the profile of the [jq](https://jqlang.org) langu
 it, and passes the shared conformance corpus [`spec/tests`](../spec/tests).
 
 - ESM, strict TypeScript, no run-time dependency.
-- The engine and the main entry run in a browser as well as in Node; only `jqlite/node` (the
+- The engine and the main entry run in a browser as well as in Node; only `@devlooped/jqlite/node` (the
   file resolver) needs Node.
 
 ## Build, test, benchmark
@@ -35,10 +35,16 @@ The cross-language benchmark ([`bench/README.md`](../bench/README.md)): `bench.j
 engine. `node scripts/bench-check.mjs [warmup-ms measure-ms]` runs it on every case of
 `bench/cases.json` and compares each output file with its `.expected` file, byte for byte.
 
+## Install
+
+```sh
+npm install @devlooped/jqlite
+```
+
 ## The API
 
 ```ts
-import { Jq, JqError } from "jqlite";
+import { Jq, JqError } from "@devlooped/jqlite";
 
 // Parse once, evaluate many times.
 const expression = Jq.parse(".items[] | select(.price > $min) | {name, total: (.price * .count)}");
@@ -72,7 +78,7 @@ Options (`JqOptions`), read when the expression is parsed:
 
 | Option | Meaning |
 | --- | --- |
-| `resolver` | a `JqResolver` (`getCanonicalPath(path, kind, metadata, fromPath)`, `open(canonicalPath)`) for `import`, `include` and `modulemeta`. `JqFileResolver` (files, relative to the importing module) is in `jqlite/node` |
+| `resolver` | a `JqResolver` (`getCanonicalPath(path, kind, metadata, fromPath)`, `open(canonicalPath)`) for `import`, `include` and `modulemeta`. `JqFileResolver` (files, relative to the importing module) is in `@devlooped/jqlite/node` |
 | `environment` | the object of `$ENV`, a plain object or a `Map`; default: `process.env` where there is one |
 | `clock` | `now()`, `offset(seconds)` and optionally `abbreviation(seconds)`; default: the system clock and zone, from `Date`, without abbreviations (`%Z` prints the offset) |
 | `maxDepth` | the call depth limit of §11, default 1,000 |

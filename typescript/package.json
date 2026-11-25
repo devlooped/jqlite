@@ -1,5 +1,5 @@
 {
-  "name": "jqlite",
+  "name": "@devlooped/jqlite",
   "version": "1.0.0",
   "description": "jqlite, a portable profile of the jq language: the TypeScript port of the JQLite reference engine",
   "license": "MIT",
@@ -27,10 +27,30 @@
     "build": "node scripts/generate-prelude.mjs && tsc -p tsconfig.json",
     "check": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.core.json --noEmit",
     "test": "npm run build && node --test \"dist/test/**/*.test.js\"",
-    "bench": "node dist/bench/crossBench.js"
+    "bench": "node dist/bench/crossBench.js",
+    "prepack": "npm run build"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
     "typescript": "^5.9.0"
-  }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devlooped/jqlite.git",
+    "directory": "typescript"
+  },
+  "homepage": "https://github.com/devlooped/jqlite",
+  "bugs": {
+    "url": "https://github.com/devlooped/jqlite/issues"
+  },
+  "author": "Daniel Cazzulino",
+  "keywords": [
+    "jq",
+    "json",
+    "query",
+    "jqlite"
+  ]
 }
