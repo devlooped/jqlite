@@ -21,7 +21,7 @@ The POM declares these coordinates:
 
 | Group | Artifact | Version |
 | --- | --- | --- |
-| `com.devlooped` | `jqlite` | `0.1.0-SNAPSHOT` |
+| `com.devlooped` | `jqlite` | `1.0.0` |
 
 The package is not published to Maven Central or another registry. Build it from the repository:
 
@@ -41,7 +41,7 @@ local Maven repository and depend on it from another project:
 <dependency>
   <groupId>com.devlooped</groupId>
   <artifactId>jqlite</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
+  <version>1.0.0</version>
 </dependency>
 ```
 

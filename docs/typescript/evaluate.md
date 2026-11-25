@@ -10,7 +10,7 @@ API has one call that does everything at once, and a parsed expression for repea
 ## One-shot evaluation
 
 ```typescript
-import { Jq } from "jqlite";
+import { Jq } from "@devlooped/jqlite";
 
 console.log(Jq.evaluate(".[] | . * 2", [1, 2, 3]));
 console.log(Jq.evaluate(".a", { b: 1 }));
@@ -31,7 +31,7 @@ program that runs once.
 ## Parse once, evaluate many times
 
 ```typescript
-import { Jq } from "jqlite";
+import { Jq } from "@devlooped/jqlite";
 
 const total = Jq.parse("map(.price * .count) | add");
 
@@ -60,7 +60,7 @@ when evaluated (see [Variables](variables.md)).
 An empty program, or one with only whitespace and comments, is the identity `.`:
 
 ```typescript
-import { Jq } from "jqlite";
+import { Jq } from "@devlooped/jqlite";
 
 console.log(Jq.evaluate("# nothing but a comment", { a: 1 }));
 ```
@@ -75,7 +75,7 @@ console.log(Jq.evaluate("# nothing but a comment", { a: 1 }));
 as soon as it is produced; the callback returns `true` to go on and `false` to stop:
 
 ```typescript
-import { Jq, type JsonValue } from "jqlite";
+import { Jq, type JsonValue } from "@devlooped/jqlite";
 
 const seen: JsonValue[] = [];
 Jq.parse("range(1e9)").evaluateEach(null, (n) => {
@@ -116,7 +116,7 @@ when one starts while another is running: from an `evaluateEach` callback, or fr
 handler.
 
 ```typescript
-import { Jq } from "jqlite";
+import { Jq } from "@devlooped/jqlite";
 
 const square = Jq.parse(". * .");
 Jq.parse(".[]").evaluateEach([2, 3], (n) => {

@@ -24,7 +24,7 @@ Anything else is a `TypeError` before the evaluation starts: a function, a symbo
 a plain object, through its own enumerable keys: a `Date` or a `Set` becomes `{}`.
 
 ```typescript
-import { Jq } from "jqlite";
+import { Jq } from "@devlooped/jqlite";
 
 console.log(Jq.evaluate("[.[] | type]", [1, "s", null, true, [], {}]));
 console.log(JSON.stringify(Jq.evaluate(".", { a: undefined, b: [1] })));
@@ -54,7 +54,7 @@ back as:
 | `-0` | `-0` |
 
 ```typescript
-import { Jq } from "jqlite";
+import { Jq } from "@devlooped/jqlite";
 
 console.log(Jq.evaluate("[nan, infinite, -infinite, 1.0, 3/2]", null));
 console.log(Jq.evaluate("[., isnan]", NaN));
@@ -76,7 +76,7 @@ A jqlite string is a sequence of Unicode code points. `length` counts code point
 program becomes U+FFFD, so every result string is well-formed UTF-16.
 
 ```typescript
-import { Jq } from "jqlite";
+import { Jq } from "@devlooped/jqlite";
 
 console.log(Jq.evaluate("explode", "a\ud800b"));
 ```
@@ -98,7 +98,7 @@ For the exact order:
 - take the results with `evaluateText`, which takes JSON text and returns the text the engine writes.
 
 ```typescript
-import { Jq } from "jqlite";
+import { Jq } from "@devlooped/jqlite";
 
 const input = new Map<string, number>([["b", 1], ["10", 2], ["a", 3]]);
 console.log(Jq.evaluate("keys_unsorted", { b: 1, "10": 2, a: 3 }));

@@ -23,7 +23,7 @@ defaults.
 ## Environment
 
 ```typescript
-import { Jq } from "jqlite";
+import { Jq } from "@devlooped/jqlite";
 
 const expression = Jq.parse("$ENV, env.A", { environment: { B: "2", A: "1" } });
 console.log(JSON.stringify(expression.evaluate(null)));
@@ -44,7 +44,7 @@ environment at all, pass `environment: {}`.
 ## Clock and time zone
 
 ```typescript
-import { Jq, type JqClock } from "jqlite";
+import { Jq, type JqClock } from "@devlooped/jqlite";
 
 // 2015-03-05T23:51:47Z, in a zone five and a half hours east of UTC.
 const clock: JqClock = { now: () => 1425599507, offset: () => 19800 };
@@ -83,7 +83,7 @@ every active call counts. Past the limit, the evaluation raises the run-time err
 `Maximum call depth exceeded`, which `try` catches like any other error.
 
 ```typescript
-import { Jq, JqError } from "jqlite";
+import { Jq, JqError } from "@devlooped/jqlite";
 
 const count = Jq.parse("def f: if . == 0 then 0 else (. - 1 | f) + 1 end; f", { maxDepth: 10 });
 console.log(count.evaluate(9));
@@ -113,7 +113,7 @@ The spec's account of depth is in [spec §11](../language/spec.md#11-limits).
 ## Debug and stderr
 
 ```typescript
-import { Jq, type JsonValue } from "jqlite";
+import { Jq, type JsonValue } from "@devlooped/jqlite";
 
 const logged: JsonValue[] = [];
 const expression = Jq.parse('debug, debug("m", {a: .}), stderr', {

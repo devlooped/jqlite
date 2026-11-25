@@ -7,7 +7,7 @@ title: "jqlite for TypeScript"
 The TypeScript port of jqlite runs jq programs on JavaScript values. It is a file-by-file port of the
 .NET reference engine: it follows the same [spec](../language/spec.md) and passes the same
 conformance corpus. The engine and the main entry have no run-time dependency and run in a browser
-as well as in Node; only the file resolver of `jqlite/node` needs Node.
+as well as in Node; only the file resolver of `@devlooped/jqlite/node` needs Node.
 
 ## Requirements
 
@@ -17,32 +17,23 @@ as well as in Node; only the file resolver of `jqlite/node` needs Node.
 
 ## Getting it
 
-The package is `jqlite`, version `1.0.0`, with two entry points:
+The package is [`@devlooped/jqlite` on npm](https://www.npmjs.com/package/@devlooped/jqlite), with two entry points:
 
 | Import | What |
 | --- | --- |
-| `jqlite` | `Jq`, `JqExpression`, the errors and the types; no Node API |
-| `jqlite/node` | `JqFileResolver`, which reads modules from the file system |
-
-The repository does not publish it to a registry. Build it from a clone of
-[devlooped/jqlite](https://github.com/devlooped/jqlite), then install the folder in your project:
+| `@devlooped/jqlite` | `Jq`, `JqExpression`, the errors and the types; no Node API |
+| `@devlooped/jqlite/node` | `JqFileResolver`, which reads modules from the file system |
 
 ```shell-session
-$ git clone https://github.com/devlooped/jqlite.git
-$ cd jqlite/typescript
-$ npm ci
-$ npm run build
-$ cd /path/to/your/project
-$ npm install /path/to/jqlite/typescript
+$ npm install @devlooped/jqlite
 ```
 
-`npm run build` writes the compiled package to `typescript/dist/`. [Port notes](port.md) has the
-test and benchmark commands.
+[Port notes](port.md) has the commands to build and test it from a clone.
 
 ## A first example
 
 ```typescript
-import { Jq } from "jqlite";
+import { Jq } from "@devlooped/jqlite";
 
 const orders = {
   items: [
