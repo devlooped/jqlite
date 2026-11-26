@@ -2,9 +2,11 @@
 # whenever a release is published.
 # Requires: vars.NUGET_OIDC or secrets.NUGET_OIDC (nuget.org username for OIDC trusted publishing)
 #
-# The ports are published by the jobs below, only for a final release (not a prerelease), each
-# from the version in its own manifest and only when the registry does not have it yet, so a
-# release that changes nothing in a port skips it. Publishing to the registry needs no secret:
+# The ports are published by the jobs below, only for a final release (not a prerelease), all
+# with the version of the release tag that the job `version` computes (v1.0.0-alpha publishes
+# 1.0.0-alpha, 1.0.0a0 on PyPI), written into each manifest before it builds, and only when the
+# registry does not have that version yet, so a rerun skips what it published. Publishing to the
+# registry needs no secret:
 #   npm       @devlooped/jqlite   trusted publisher of the package (OIDC)
 #   crates    jqlite              trusted publisher of the crate (OIDC)
 #   PyPI      devlooped-jqlite    trusted publisher of the project (OIDC)
@@ -100,12 +102,39 @@ jobs:
           dotnet tool update sleet -g --allow-downgrade --version $(curl -s --compressed ${{ vars.SLEET_FEED_URL }} | jq '.["sleet:version"]' -r)        
           sleet push bin --config none -f --verbose -p "SLEET_FEED_CONTAINER=nuget" -p "SLEET_FEED_CONNECTIONSTRING=${{ secrets.SLEET_CONNECTION }}" -p "SLEET_FEED_TYPE=azure" || echo "No packages found"
 
-  npm:
+  # The version of every port: the one the .NET build makes of the release tag (VersionLabel, in
+  # dotnet/Directory.Build.props), so that every package of a release has the same version.
+  version:
     if: github.event.action == 'released'
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - name: 🤘 checkout
+        uses: actions/checkout@v4
+
+      - name: ⚙ dotnet
+        uses: devlooped/actions-dotnet-env@v1
+
+      - name: 🔢 version
+        id: version
+        run: |
+          version=$(dotnet msbuild dotnet/JQLite/JQLite.csproj -getProperty:Version)
+          if [[ -z "$version" || "$version" == 42.42.* ]]; then
+            echo "::error::The release tag ${{ github.event.release.tag_name }} gives no release version ('$version')"
+            exit 1
+          fi
+          echo "Version: $version"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+  npm:
+    needs: version
     runs-on: ubuntu-latest
     permissions:
       contents: read
       id-token: write
+    env:
+      VERSION: ${{ needs.version.outputs.version }}
     defaults:
       run:
         working-directory: typescript
@@ -119,13 +148,16 @@ jobs:
           node-version: 24
           registry-url: https://registry.npmjs.org
 
+      # A prerelease goes under the dist-tag `next`, so that `latest` stays the last final version.
       - name: 🔎 version
         id: version
         run: |
+          npm version "$VERSION" --no-git-tag-version --allow-same-version
           name=$(node -p "require('./package.json').name")
-          version=$(node -p "require('./package.json').version")
-          if npm view "$name@$version" version > /dev/null 2>&1; then
-            echo "$name@$version is already published"
+          if [[ "$VERSION" == *-* ]]; then tag=next; else tag=latest; fi
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          if npm view "$name@$VERSION" version > /dev/null 2>&1; then
+            echo "$name@$VERSION is already published"
             echo "publish=false" >> "$GITHUB_OUTPUT"
           else
             echo "publish=true" >> "$GITHUB_OUTPUT"
@@ -139,14 +171,16 @@ jobs:
 
       - name: 🚀 npm
         if: steps.version.outputs.publish == 'true'
-        run: npm publish --access public
+        run: npm publish --access public --tag ${{ steps.version.outputs.tag }}
 
   pypi:
-    if: github.event.action == 'released'
+    needs: version
     runs-on: ubuntu-latest
     permissions:
       contents: read
       id-token: write
+    env:
+      VERSION: ${{ needs.version.outputs.version }}
     steps:
       - name: 🤘 checkout
         uses: actions/checkout@v4
@@ -156,15 +190,23 @@ jobs:
         with:
           python-version: '3.13'
 
+      # PyPI takes the PEP 440 form of the version: 1.0.0-alpha is 1.0.0a0.
+      - name: 🔢 version
+        working-directory: python
+        run: |
+          python -m pip install build packaging
+          version=$(python -c "import sys; from packaging.version import Version; print(Version(sys.argv[1]))" "$VERSION")
+          sed -i "s/^version = \".*\"/version = \"$version\"/" pyproject.toml
+          grep -q "^version = \"$version\"" pyproject.toml
+          echo "Version: $version"
+
       - name: 🧪 test
         working-directory: python
         run: python -m unittest
 
       - name: 🙏 build
         working-directory: python
-        run: |
-          python -m pip install build
-          python -m build
+        run: python -m build
 
       - name: 🚀 pypi
         uses: pypa/gh-action-pypi-publish@release/v1
@@ -173,11 +215,13 @@ jobs:
           skip-existing: true
 
   crates:
-    if: github.event.action == 'released'
+    needs: version
     runs-on: ubuntu-latest
     permissions:
       contents: read
       id-token: write
+    env:
+      VERSION: ${{ needs.version.outputs.version }}
     defaults:
       run:
         working-directory: rust
@@ -185,12 +229,14 @@ jobs:
       - name: 🤘 checkout
         uses: actions/checkout@v4
 
+      # The first `version =` of Cargo.toml is the one of [package].
       - name: 🔎 version
         id: version
         run: |
-          version=$(cargo metadata --no-deps --format-version 1 | jq -r '.packages[] | select(.name == "jqlite") | .version')
-          if curl -fsS -A "devlooped/jqlite publish" "https://crates.io/api/v1/crates/jqlite/$version" > /dev/null; then
-            echo "jqlite $version is already published"
+          sed -i "0,/^version = \".*\"/s//version = \"$VERSION\"/" Cargo.toml
+          test "$(cargo metadata --no-deps --format-version 1 | jq -r '.packages[] | select(.name == "jqlite") | .version')" = "$VERSION"
+          if curl -fsS -A "devlooped/jqlite publish" "https://crates.io/api/v1/crates/jqlite/$VERSION" > /dev/null; then
+            echo "jqlite $VERSION is already published"
             echo "publish=false" >> "$GITHUB_OUTPUT"
           else
             echo "publish=true" >> "$GITHUB_OUTPUT"
@@ -207,16 +253,17 @@ jobs:
 
       - name: 🚀 crates.io
         if: steps.version.outputs.publish == 'true'
-        run: cargo publish -p jqlite
+        run: cargo publish -p jqlite --allow-dirty
         env:
           CARGO_REGISTRY_TOKEN: ${{ steps.auth.outputs.token }}
 
   maven:
-    if: github.event.action == 'released'
+    needs: version
     runs-on: ubuntu-latest
     permissions:
       contents: read
     env:
+      VERSION: ${{ needs.version.outputs.version }}
       CENTRAL_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
       CENTRAL_PASSWORD: ${{ secrets.CENTRAL_PASSWORD }}
       MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
@@ -241,9 +288,10 @@ jobs:
       - name: 🔎 version
         id: version
         run: |
-          version=$(./mvnw -q help:evaluate -Dexpression=project.version -DforceStdout)
-          if curl -fsS -o /dev/null "https://repo1.maven.org/maven2/com/devlooped/jqlite/$version/jqlite-$version.pom"; then
-            echo "com.devlooped:jqlite:$version is already published"
+          ./mvnw -B -q versions:set -DnewVersion="$VERSION" -DgenerateBackupPoms=false
+          test "$(./mvnw -q help:evaluate -Dexpression=project.version -DforceStdout)" = "$VERSION"
+          if curl -fsS -o /dev/null "https://repo1.maven.org/maven2/com/devlooped/jqlite/$VERSION/jqlite-$VERSION.pom"; then
+            echo "com.devlooped:jqlite:$VERSION is already published"
             echo "publish=false" >> "$GITHUB_OUTPUT"
           else
             echo "publish=true" >> "$GITHUB_OUTPUT"
