@@ -5,6 +5,7 @@ from __future__ import annotations
 import math
 import random
 import struct
+import sys
 import threading
 import unittest
 from typing import Any
@@ -35,8 +36,14 @@ def text_of(result: Any) -> str:
     return "error: " + result.error if type(result) is Fail else J(result)  # type: ignore[union-attr,operator]
 
 
+# CPython 3.13 lets C code (the deallocation of a chain of objects, too) nest as deep as an 8 MB
+# stack holds on Linux, so freeing a list or a tree 10,000 levels deep overflows a 1 MB stack there
+# with no jqlite code involved; 3.12 and 3.14 do not. On 3.13 no test stack is smaller than 4 MB.
+MIN_STACK = 4 * 1024 * 1024 if sys.version_info[:2] == (3, 13) else 0
+
+
 def on_small_stack(test: unittest.TestCase, step: object, size: int = 1024 * 1024) -> object:
-    """Runs ``step`` on a thread with a small C stack and returns its result."""
+    """Runs ``step`` on a thread with a small C stack (at least ``MIN_STACK``) and returns its result."""
     result: list = []
     failure: list = []
 
@@ -45,7 +52,7 @@ def on_small_stack(test: unittest.TestCase, step: object, size: int = 1024 * 102
             result.append(step())  # type: ignore[operator]
         except BaseException as e:  # noqa: BLE001
             failure.append(e)
-    previous = threading.stack_size(size)
+    previous = threading.stack_size(max(size, MIN_STACK))
     try:
         thread = threading.Thread(target=run)
         thread.start()
