@@ -1,0 +1,18 @@
+<svg width="160" height="160" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="jqlite">
+  <defs>
+    <linearGradient id="jqlite-icon-cyan" gradientUnits="userSpaceOnUse" x1="0" y1="34" x2="0" y2="108">
+      <stop offset="0%" stop-color="#24c6c6"/>
+      <stop offset="100%" stop-color="#178f8f"/>
+    </linearGradient>
+    <linearGradient id="jqlite-icon-blue" gradientUnits="userSpaceOnUse" x1="0" y1="54" x2="0" y2="126">
+      <stop offset="0%" stop-color="#509af6"/>
+      <stop offset="100%" stop-color="#287ce0"/>
+    </linearGradient>
+  </defs>
+  <circle cx="19" cy="92.5" r="7.5" fill="url(#jqlite-icon-cyan)"/>
+  <rect x="37.5" y="34.5" width="7" height="70" rx="3.5" fill="url(#jqlite-icon-cyan)"/>
+  <circle cx="87" cy="41.5" r="7.2" fill="url(#jqlite-icon-cyan)"/>
+  <path d="M 73.5 60.5 H 87 V 103 A 16.2 16.2 0 0 1 70.8 119.2 H 68" fill="none" stroke="url(#jqlite-icon-blue)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="126" cy="77.5" r="17.5" fill="none" stroke="url(#jqlite-icon-blue)" stroke-width="12"/>
+  <path d="M 143.5 60 V 119.2" fill="none" stroke="url(#jqlite-icon-blue)" stroke-width="12" stroke-linecap="round"/>
+</svg>

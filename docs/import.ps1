@@ -55,6 +55,7 @@ $aliases = @{
 # Files copied as they are.
 $assets = @{
     'assets/img/logo.svg' = 'img/logo.svg'
+    'assets/img/icon.svg' = 'img/icon.svg'
 }
 
 $targets = @{}
