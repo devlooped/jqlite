@@ -64,20 +64,20 @@ foreach (var json in payloads)
 The `WhatsApp/Message.jq` filter on one WhatsApp message, against the `jq` executable (run through `Devlooped.JQ`), with and without a cached `JqExpression`:
 
 ```
-BenchmarkDotNet v0.15.8, Windows 11 (10.0.26300.9711)
+BenchmarkDotNet v0.15.8, Windows 11 (10.0.26300.9818)
 AMD Ryzen AI 9 HX 370 w/ Radeon 890M 2.00GHz, 1 CPU, 24 logical and 12 physical cores
-.NET SDK 11.0.100-rc.3.26522.148
-  [Host]     : .NET 8.0.34 (8.0.34, 8.0.3426.52217), X64 RyuJIT x86-64-v4
-  DefaultJob : .NET 8.0.34 (8.0.34, 8.0.3426.52217), X64 RyuJIT x86-64-v4
+.NET SDK 11.0.100
+  [Host]     : .NET 10.0.15 (10.0.15, 10.0.1526.53008), X64 RyuJIT x86-64-v4
+  DefaultJob : .NET 10.0.15 (10.0.15, 10.0.1526.53008), X64 RyuJIT x86-64-v4
 ```
 
 | Method                  | Mean         | Error      | StdDev       | Ratio | RatioSD | Gen0    | Gen1   | Allocated | Alloc Ratio |
 |-------------------------|-------------:|-----------:|-------------:|------:|--------:|--------:|-------:|----------:|------------:|
-| jq executable           | 27,689.45 us | 548.792 us | 1,017.221 us | 1.001 |    0.05 |       - |      - | 122.15 KB |        1.00 |
-| JQLite no caching       |    148.33 us |   2.953 us |     7.674 us | 0.005 |    0.00 | 30.1514 | 5.4932 | 246.83 KB |        2.02 |
-| JQLite w/query caching  |     12.46 us |   0.249 us |     0.601 us | 0.000 |    0.00 |  1.9684 | 0.0458 |  16.15 KB |        0.13 |
+| jq executable           | 22,154.58 us | 274.029 us |   256.327 us | 1.000 |    0.02 |       - |      - | 121.89 KB |        1.00 |
+| JQLite no caching       |     73.63 us |   0.714 us |     0.668 us | 0.003 |    0.00 | 30.0293 | 5.9814 | 246.05 KB |        2.02 |
+| JQLite w/query caching  |      6.84 us |   0.069 us |     0.065 us | 0.000 |    0.00 |  1.9379 | 0.0458 |  15.89 KB |        0.13 |
 
-Programs whose cost must grow in step with their size, each on the input `null` with a cached expression. "1.x" is the previous engine, measured as one warm run each (not with BenchmarkDotNet), so compare orders of magnitude, not digits:
+Programs whose cost must grow in step with their size, each on the input `null` with a cached expression, measured on .NET 8. "1.x" is the previous engine, measured as one warm run each (not with BenchmarkDotNet), so compare orders of magnitude, not digits:
 
 | Program                                              | Mean (1.x) | Allocated (1.x) |      Mean |    Allocated |
 |------------------------------------------------------|-----------:|----------------:|----------:|-------------:|
