@@ -19,7 +19,7 @@
 <ol class="navbar-nav jqlite-languages">
   <li class="nav-item dropdown{{ $current != null ? " active" : "" }}">
     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-      <i class="bi bi-code-slash" aria-hidden="true"></i>{{ $current != null ? $current.name : "Implementations" }}
+      <i class="bi bi-code-slash" aria-hidden="true"></i> <span class="jqlite-languages-label">{{ $current != null ? $current.name : "Implementations" }}</span>
     </a>
     <ul class="dropdown-menu">
       <li><h6 class="dropdown-header">{{ $current != null ? "This page in another language" : "Pick your language" }}</h6></li>
