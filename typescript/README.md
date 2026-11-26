@@ -141,7 +141,8 @@ emit)` with one function per construct, as a trampoline:
 Function calls, generators feeding generators, nesting and long sequences therefore cost heap,
 not stack. **What it guarantees: any `MaxDepth`**, as far as memory allows. The tests run
 recursions to exactly `MaxDepth` for 1,000, 5,000, 20,000 and 200,000 (and 1,000,000 through the
-API) on Node's default stack, and on worker threads with stacks of 256 KB and 1 MB; past the
+API) on Node's default stack, and on worker threads with stacks of 512 KB and 1 MB (the reference's 256 KB is too small for Node
+24.22 on Linux to load a worker's first ES module); past the
 limit the error is always `Maximum call depth exceeded`. Nothing catches `RangeError`, lowers
 the limit or asks for `--stack-size`.
 
