@@ -1,9 +1,21 @@
-# ./jqlite
+<p align="center">
+  <img src="assets/img/logo.svg" alt="jqlite" width="256">
+</p>
 
-[![Version](https://img.shields.io/nuget/vpre/JQLite.svg?color=royalblue)](https://www.nuget.org/packages/JQLite)
-[![Downloads](https://img.shields.io/nuget/dt/JQLite.svg?color=darkmagenta)](https://www.nuget.org/packages/JQLite)
-[![EULA](https://img.shields.io/badge/EULA-OSMF-blue?labelColor=black&color=C9FF30)](https://github.com/devlooped/jqlite/blob/main/osmfeula.txt)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/devlooped/jqlite/blob/main/license.txt)
+<p align="center">
+  <a href="https://www.nuget.org/packages/JQLite"><img src="https://img.shields.io/nuget/vpre/JQLite.svg?label=nuget&color=royalblue" alt="NuGet"></a>
+  <a href="https://www.npmjs.com/package/@devlooped/jqlite"><img src="https://img.shields.io/npm/v/@devlooped/jqlite.svg?label=npm&color=royalblue" alt="npm"></a>
+  <a href="https://pypi.org/project/devlooped-jqlite"><img src="https://img.shields.io/pypi/v/devlooped-jqlite.svg?label=pypi&color=royalblue" alt="PyPI"></a>
+  <a href="https://central.sonatype.com/artifact/com.devlooped/jqlite"><img src="https://img.shields.io/maven-central/v/com.devlooped/jqlite.svg?label=maven&color=royalblue" alt="Maven Central"></a>
+  <a href="https://pkg.go.dev/github.com/devlooped/jqlite/go"><img src="https://img.shields.io/github/v/tag/devlooped/jqlite.svg?filter=go/*&label=go&color=royalblue" alt="Go"></a>
+  <a href="https://crates.io/crates/jqlite"><img src="https://img.shields.io/crates/v/jqlite.svg?label=crates.io&color=royalblue" alt="crates.io"></a>
+</p>
+
+<p align="center">
+  <a href="https://www.nuget.org/packages/JQLite"><img src="https://img.shields.io/nuget/dt/JQLite.svg?color=darkmagenta" alt="Downloads"></a>
+  <a href="https://github.com/devlooped/jqlite/blob/main/osmfeula.txt"><img src="https://img.shields.io/badge/EULA-OSMF-blue?labelColor=black&color=C9FF30" alt="EULA"></a>
+  <a href="https://github.com/devlooped/jqlite/blob/main/license.txt"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
+</p>
 
 
 <!-- #description -->
