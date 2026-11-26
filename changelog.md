@@ -1,5 +1,17 @@
 # Changelog
 
+## [go/v1.0.0-beta](https://github.com/devlooped/jqlite/tree/go/v1.0.0-beta) (2026-11-26)
+
+[Full Changelog](https://github.com/devlooped/jqlite/compare/v1.0.0-beta...go/v1.0.0-beta)
+
+## [v1.0.0-beta](https://github.com/devlooped/jqlite/tree/v1.0.0-beta) (2026-11-26)
+
+[Full Changelog](https://github.com/devlooped/jqlite/compare/v1.0.0-alpha...v1.0.0-beta)
+
+:bug: Fixed bugs:
+
+- Run the TypeScript stack tests on 512 KB workers [\#73](https://github.com/devlooped/jqlite/pull/73) (@kzu)
+
 ## [v1.0.0-alpha](https://github.com/devlooped/jqlite/tree/v1.0.0-alpha) (2026-11-26)
 
 [Full Changelog](https://github.com/devlooped/jqlite/compare/go/v1.0.0-alpha...v1.0.0-alpha)
