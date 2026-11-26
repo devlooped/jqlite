@@ -2,6 +2,46 @@
 // config.scriban). Colours come from the theme's variables, so both modes follow.
 
 // ---------------------------------------------------------------------------
+// Top navigation bar right-side icon buttons (theme toggle, Sponsor, GitHub)
+// ---------------------------------------------------------------------------
+// Match the box spacing of the search magnifying glass (.input-group-text: 0.375rem 0.75rem
+// around a 1rem icon) and clear the template's text-button margins and padding on icons.
+
+#lunet .navbar .navbar-right {
+    .navbar-nav {
+        flex-direction: row;
+        gap: 0.5rem;
+
+        li {
+            margin-right: 0;
+        }
+    }
+
+    .btn,
+    .navbar-nav a.btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 0;
+        gap: 0;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        border: var(--bs-border-width) solid transparent;
+
+        i.bi,
+        .bi {
+            margin-right: 0;
+            padding: 0;
+        }
+    }
+
+    .lunet-theme-toggle {
+        border-color: var(--lunet-color-border-strong);
+    }
+}
+
+// ---------------------------------------------------------------------------
 // The language switcher (.lunet/includes/jqlite/languages.sbn-html)
 // ---------------------------------------------------------------------------
 
