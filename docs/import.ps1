@@ -47,9 +47,9 @@ $pages = @(
 )
 
 # Documents that are not imported because the site has a page of its own for them: a link to one
-# goes to that page.
+# goes to that page. The readme of the repository is the overview of the project, as the home page is.
 $aliases = @{
-    'readme.md' = 'dotnet/readme.md'
+    'readme.md' = 'readme.md'
 }
 
 # Files copied as they are.
