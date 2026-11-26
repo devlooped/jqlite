@@ -1,12 +1,17 @@
 # Changelog
 
-## [go/v1.0.0-alpha](https://github.com/devlooped/jqlite/tree/go/v1.0.0-alpha) (2026-11-26)
-
-[Full Changelog](https://github.com/devlooped/jqlite/compare/v1.0.0-alpha...go/v1.0.0-alpha)
-
 ## [v1.0.0-alpha](https://github.com/devlooped/jqlite/tree/v1.0.0-alpha) (2026-11-26)
 
-[Full Changelog](https://github.com/devlooped/jqlite/compare/v1.0.2-legacy...v1.0.0-alpha)
+[Full Changelog](https://github.com/devlooped/jqlite/compare/go/v1.0.0-alpha...v1.0.0-alpha)
+
+:twisted_rightwards_arrows: Merged:
+
+- Publish every port with the version of the release tag [\#72](https://github.com/devlooped/jqlite/pull/72) (@kzu)
+- Publish to nuget.org with OIDC trusted publishing [\#71](https://github.com/devlooped/jqlite/pull/71) (@kzu)
+
+## [go/v1.0.0-alpha](https://github.com/devlooped/jqlite/tree/go/v1.0.0-alpha) (2026-11-26)
+
+[Full Changelog](https://github.com/devlooped/jqlite/compare/v1.0.2-legacy...go/v1.0.0-alpha)
 
 :sparkles: Implemented enhancements:
 
