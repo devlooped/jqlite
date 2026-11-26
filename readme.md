@@ -31,12 +31,12 @@ and ported file by file to TypeScript, Python, Java, Go and Rust.
 
 | Implementation | Package | Guide |
 | --- | --- | --- |
-| .NET (the reference) | [`JQLite`](https://www.nuget.org/packages/JQLite) on NuGet | [devlooped.com/jqlite/dotnet](https://www.devlooped.com/jqlite/dotnet/) |
-| TypeScript | [`@devlooped/jqlite`](https://www.npmjs.com/package/@devlooped/jqlite) on npm | [devlooped.com/jqlite/typescript](https://www.devlooped.com/jqlite/typescript/) |
-| Python | [`devlooped-jqlite`](https://pypi.org/project/devlooped-jqlite) on PyPI, imported as `jqlite` | [devlooped.com/jqlite/python](https://www.devlooped.com/jqlite/python/) |
-| Java | [`com.devlooped:jqlite`](https://central.sonatype.com/artifact/com.devlooped/jqlite) on Maven Central | [devlooped.com/jqlite/java](https://www.devlooped.com/jqlite/java/) |
-| Go | module [`github.com/devlooped/jqlite/go`](https://pkg.go.dev/github.com/devlooped/jqlite/go) | [devlooped.com/jqlite/go](https://www.devlooped.com/jqlite/go/) |
-| Rust | crate [`jqlite`](https://crates.io/crates/jqlite) | [devlooped.com/jqlite/rust](https://www.devlooped.com/jqlite/rust/) |
+| .NET (the reference) | [`JQLite`](https://www.nuget.org/packages/JQLite) on NuGet | [jqlite/dotnet](https://www.devlooped.com/jqlite/dotnet/) |
+| TypeScript | [`@devlooped/jqlite`](https://www.npmjs.com/package/@devlooped/jqlite) on npm | [jqlite/typescript](https://www.devlooped.com/jqlite/typescript/) |
+| Python | [`devlooped-jqlite`](https://pypi.org/project/devlooped-jqlite) on PyPI, imported as `jqlite` | [jqlite/python](https://www.devlooped.com/jqlite/python/) |
+| Java | [`com.devlooped:jqlite`](https://central.sonatype.com/artifact/com.devlooped/jqlite) on Maven Central | [jqlite/java](https://www.devlooped.com/jqlite/java/) |
+| Go | module [`github.com/devlooped/jqlite/go`](https://pkg.go.dev/github.com/devlooped/jqlite/go) | [jqlite/go](https://www.devlooped.com/jqlite/go/) |
+| Rust | crate [`jqlite`](https://crates.io/crates/jqlite) | [jqlite/rust](https://www.devlooped.com/jqlite/rust/) |
 
 ## Open Source Maintenance Fee
 
@@ -232,6 +232,60 @@ fn main() -> Result<(), JqError> {
 
 Read the [Rust guide](https://www.devlooped.com/jqlite/rust/), and the 
 [port notes](rust/README.md) to build and test it.
+
+## Performance
+
+### Against the jq executable
+
+jqlite runs in the process of its host, so it does not pay for starting a process, reading the 
+program and writing JSON text on every evaluation. The 
+[`WhatsApp/Message.jq`](dotnet/Benchmarks/WhatsApp/Message.jq) filter on one WhatsApp message, with 
+.NET 10 on Windows 11 (BenchmarkDotNet), against the `jq` executable run through `Devlooped.JQ`:
+
+| Engine | Mean | Relative to jq |
+| --- | ---: | ---: |
+| `jq` executable | 22.15 ms | 1× |
+| JQLite, the program parsed on each evaluation | 73.63 µs | 301× faster |
+| JQLite, the `JqExpression` parsed once | 6.84 µs | 3,237× faster |
+
+The [package readme](dotnet/JQLite/readme.md#performance-vs-jqexe) has the full BenchmarkDotNet 
+output and the programs whose cost must stay linear or lazy.
+
+### Across implementations
+
+The [cross-language benchmark](bench/README.md) runs the same 15 [cases](bench/cases.json) on 
+every implementation, checks that each gives the outputs of `.expected` byte for byte, and divides 
+its time by the time of .NET: 1.00× is as fast as .NET, 2.00× takes twice as long. Measured with 
+`pwsh bench/run.ps1` on Ubuntu 24.04 in WSL 2, on an AMD Ryzen AI 9 HX 370, with .NET 10.0.15, 
+Node.js 22.23.5, CPython 3.12.3, OpenJDK 21.0.13, Go 1.26.11 and Rust 1.94.0.
+
+Geometric mean of the 15 cases, for each measurement:
+
+| Measurement | .NET | TypeScript | Python | Java | Go | Rust |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Evaluate: a compiled program on a value already read | 1.00× | 1.07× | 9.75× | 0.48× | 1.55× | 0.56× |
+| Text to text: read the input, evaluate, write the outputs | 1.00× | 0.78× | 7.72× | 0.36× | 1.21× | 0.42× |
+| Compile: parse and bind the program | 1.00× | 1.54× | 19.0× | 0.75× | 1.54× | 1.12× |
+
+Evaluate, for each case (the time of .NET in parentheses):
+
+| Case | .NET | TypeScript | Python | Java | Go | Rust |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| `whatsapp` | 1.00× (3.44 µs) | 1.51× | 12.5× | 0.59× | 1.35× | 0.66× |
+| `map-add` | 1.00× (15.63 ms) | 0.79× | 4.42× | 0.44× | 1.76× | 0.58× |
+| `append-reduce` | 1.00× (1.36 ms) | 0.59× | 6.92× | 0.43× | 1.60× | 0.50× |
+| `join-strings` | 1.00× (6.86 ms) | 1.11× | 9.30× | 0.61× | 1.36× | 0.89× |
+| `add-strings` | 1.00× (2.59 ms) | 0.84× | 6.10× | 0.38× | 1.81× | 0.57× |
+| `update-each` | 1.00× (497.56 µs) | 0.61× | 13.1× | 0.42× | 1.82× | 0.74× |
+| `index-reduce` | 1.00× (7.40 ms) | 1.08× | 8.22× | 0.26× | 1.81× | 0.51× |
+| `first-of-range` | 1.00× (272 ns) | 0.80× | 11.9× | 0.24× | 1.72× | 0.34× |
+| `recursion` | 1.00× (6.22 ms) | 0.70× | 15.7× | 0.77× | 0.85× | 0.71× |
+| `group-by` | 1.00× (1.67 ms) | 1.39× | 5.56× | 0.73× | 1.52× | 0.54× |
+| `filter-project` | 1.00× (2.20 ms) | 1.22× | 10.1× | 0.48× | 1.50× | 0.57× |
+| `strings-regex` | 1.00× (8.52 ms) | 2.51× | 21.2× | 0.61× | 1.89× | 0.69× |
+| `paths-walk` | 1.00× (11.58 ms) | 1.69× | 16.2× | 0.50× | 1.78× | 0.72× |
+| `json-roundtrip` | 1.00× (6.83 ms) | 1.01× | 10.9× | 0.63× | 1.25× | 0.46× |
+| `assign-paths` | 1.00× (9.15 ms) | 1.47× | 7.51× | 0.39× | 1.59× | 0.30× |
 
 ## The project
 
