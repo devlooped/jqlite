@@ -1,40 +1,80 @@
 # Changelog
 
-## [v1.0.2](https://github.com/devlooped/JQSharp/tree/v1.0.2) (2026-08-11)
+## [go/v1.0.0-alpha](https://github.com/devlooped/jqlite/tree/go/v1.0.0-alpha) (2026-11-26)
 
-[Full Changelog](https://github.com/devlooped/JQSharp/compare/v1.0.1...v1.0.2)
+[Full Changelog](https://github.com/devlooped/jqlite/compare/v1.0.0-alpha...go/v1.0.0-alpha)
 
-:twisted_rightwards_arrows: Merged:
+## [v1.0.0-alpha](https://github.com/devlooped/jqlite/tree/v1.0.0-alpha) (2026-11-26)
 
-- Add external variable bindings for JqExpression evaluation [\#36](https://github.com/devlooped/JQSharp/pull/36) (@Copilot)
-
-## [v1.0.1](https://github.com/devlooped/JQSharp/tree/v1.0.1) (2026-03-27)
-
-[Full Changelog](https://github.com/devlooped/JQSharp/compare/v1.0.0...v1.0.1)
+[Full Changelog](https://github.com/devlooped/jqlite/compare/v1.0.2-legacy...v1.0.0-alpha)
 
 :sparkles: Implemented enhancements:
 
-- Add support for module metadata [\#18](https://github.com/devlooped/JQSharp/pull/18) (@kzu)
+- Every implementation runs one regex engine: an empty iteration ends its repetition [\#62](https://github.com/devlooped/jqlite/pull/62) (@kzu)
+- Make the special functions accurate: tgamma, lgamma and erf/erfc [\#60](https://github.com/devlooped/jqlite/pull/60) (@kzu)
+- Carry the in-place string append to the ports [\#59](https://github.com/devlooped/jqlite/pull/59) (@kzu)
+- Limit the size of a regex pattern in the spec and in every port [\#58](https://github.com/devlooped/jqlite/pull/58) (@kzu)
+- Give the \_impl sorters an error for arrays of different lengths [\#57](https://github.com/devlooped/jqlite/pull/57) (@kzu)
+- Make updates that add keys in a loop linear [\#56](https://github.com/devlooped/jqlite/pull/56) (@kzu)
+- Make + on strings append in place, so join and add are linear [\#55](https://github.com/devlooped/jqlite/pull/55) (@kzu)
+- Make sub, gsub and split/2 linear in the number of matches [\#52](https://github.com/devlooped/jqlite/pull/52) (@kzu)
+- Port jqlite to Go, Java, Python, Rust and TypeScript [\#51](https://github.com/devlooped/jqlite/pull/51) (@kzu)
+- Make the Jq.Parse overloads explicit, with no optional or nullable parameter [\#50](https://github.com/devlooped/jqlite/pull/50) (@kzu)
+- Add Jq.Parse\(expression, resolver\) to ease migration from 1.x [\#49](https://github.com/devlooped/jqlite/pull/49) (@kzu)
+- JQSharp 2.0: the jqlite reference core [\#46](https://github.com/devlooped/jqlite/pull/46) (@kzu)
 
-:twisted_rightwards_arrows: Merged:
+:bug: Fixed bugs:
 
-- Add benchmarks against jq executable [\#14](https://github.com/devlooped/JQSharp/pull/14) (@kzu)
-
-## [v1.0.0](https://github.com/devlooped/JQSharp/tree/v1.0.0) (2026-03-09)
-
-[Full Changelog](https://github.com/devlooped/JQSharp/compare/v1.0.0-beta...v1.0.0)
-
-## [v1.0.0-beta](https://github.com/devlooped/JQSharp/tree/v1.0.0-beta) (2026-03-09)
-
-[Full Changelog](https://github.com/devlooped/JQSharp/compare/64a79c8b6525933c9df7a4a2c9827a28f17331ea...v1.0.0-beta)
+- Replace lone surrogates in keys given to the Java object types [\#64](https://github.com/devlooped/jqlite/pull/64) (@kzu)
+- Write an empty capture with jq's key order \(offset, string, length, name\) [\#61](https://github.com/devlooped/jqlite/pull/61) (@kzu)
 
 :hammer: Other:
 
-- The project exposes a large number of implementation types that should be hidden from consumers [\#6](https://github.com/devlooped/JQSharp/issues/6)
+- JQ.ExecuteAsync prepends version banner to StandardOutput [\#45](https://github.com/devlooped/jqlite/issues/45)
+- Bump all open dependency updates together [\#43](https://github.com/devlooped/jqlite/issues/43)
+- Add support for passing variables for binding when evaluating a JqExpression [\#35](https://github.com/devlooped/jqlite/issues/35)
 
 :twisted_rightwards_arrows: Merged:
 
-- Reduce JQSharp public API surface by hiding implementation types [\#8](https://github.com/devlooped/JQSharp/pull/8) (@Copilot)
+- Publish every port to its registry under the devlooped org [\#66](https://github.com/devlooped/jqlite/pull/66) (@kzu)
+- Give the outputs of match an untracked path in path mode [\#54](https://github.com/devlooped/jqlite/pull/54) (@kzu)
+- Bump all requested dependencies together [\#44](https://github.com/devlooped/jqlite/pull/44) (@Copilot)
+
+## [v1.0.2-legacy](https://github.com/devlooped/jqlite/tree/v1.0.2-legacy) (2026-08-11)
+
+[Full Changelog](https://github.com/devlooped/jqlite/compare/v1.0.1-legacy...v1.0.2-legacy)
+
+:twisted_rightwards_arrows: Merged:
+
+- Add external variable bindings for JqExpression evaluation [\#36](https://github.com/devlooped/jqlite/pull/36) (@Copilot)
+
+## [v1.0.1-legacy](https://github.com/devlooped/jqlite/tree/v1.0.1-legacy) (2026-03-27)
+
+[Full Changelog](https://github.com/devlooped/jqlite/compare/v1.0.0-legacy...v1.0.1-legacy)
+
+:sparkles: Implemented enhancements:
+
+- Add support for module metadata [\#18](https://github.com/devlooped/jqlite/pull/18) (@kzu)
+
+:twisted_rightwards_arrows: Merged:
+
+- Add benchmarks against jq executable [\#14](https://github.com/devlooped/jqlite/pull/14) (@kzu)
+
+## [v1.0.0-legacy](https://github.com/devlooped/jqlite/tree/v1.0.0-legacy) (2026-03-09)
+
+[Full Changelog](https://github.com/devlooped/jqlite/compare/v1.0.0-beta-legacy...v1.0.0-legacy)
+
+## [v1.0.0-beta-legacy](https://github.com/devlooped/jqlite/tree/v1.0.0-beta-legacy) (2026-03-09)
+
+[Full Changelog](https://github.com/devlooped/jqlite/compare/64a79c8b6525933c9df7a4a2c9827a28f17331ea...v1.0.0-beta-legacy)
+
+:hammer: Other:
+
+- The project exposes a large number of implementation types that should be hidden from consumers [\#6](https://github.com/devlooped/jqlite/issues/6)
+
+:twisted_rightwards_arrows: Merged:
+
+- Reduce JQSharp public API surface by hiding implementation types [\#8](https://github.com/devlooped/jqlite/pull/8) (@Copilot)
 
 
 
