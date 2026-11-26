@@ -2,7 +2,8 @@
 // a program meets (spec §11): the reference continues on a fresh stack when the host stack runs
 // short; this port's interpreter does not recurse on the host stack at all (Interpreter). The
 // cases run on the stack of Node's main thread and, for the recursions, on worker threads with
-// stacks of 256 KB and 1 MB, as the reference's.
+// stacks of 512 KB and 1 MB. The reference's smallest is 256 KB, but from Node 24.22 on Linux a
+// worker overflows 256 KB while it loads its first ES module, before any program runs.
 
 import assert from "node:assert/strict";
 import { test } from "node:test";
@@ -70,7 +71,7 @@ function onStack(megabytes: number, work: { program: string; maxDepth: number }[
   });
 }
 
-for (const megabytes of [0.25, 1]) {
+for (const megabytes of [0.5, 1]) {
   test(`recursion reaches exactly MaxDepth on a stack of ${megabytes} MB`, async () => {
     check(await onStack(megabytes, [...jobs(1000), ...jobs(5000), ...jobs(20000)]));
   });
@@ -123,7 +124,7 @@ const DeepPatterns: [string, string][] = [
 
 test("a long pattern with a key of several outputs does not use the host stack", async () => {
   for (const [program, expected] of LongPatterns) assert.equal(line(program), expected);
-  const results = await onStack(0.25, LongPatterns.map(([program]) => ({ program, maxDepth: 1000 })));
+  const results = await onStack(0.5, LongPatterns.map(([program]) => ({ program, maxDepth: 1000 })));
   assert.deepEqual(results, LongPatterns.map(([, expected]) => expected));
 });
 
